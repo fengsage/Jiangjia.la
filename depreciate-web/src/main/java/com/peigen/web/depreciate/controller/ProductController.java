@@ -101,7 +101,7 @@ public class ProductController extends ControllerBase {
 		String url = getParameterTrim(request, "productUrl");
 		
 		if (StringUtil.isBlank(email) || StringUtil.isBlank(url)) {
-			JSONObject.toJSONString("狗日，你丫是二啊!");
+			return JSONObject.toJSONString("狗日，你丫是二啊!");
 		}
 		
 		ProductResult result = new ProductResult();
