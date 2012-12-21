@@ -7,7 +7,11 @@
 		<td><a href="$!result.productInfo.productUrl" target="_blank">$!result.productInfo.productUrl</a></td>
 	</tr>
 	<tr>
-		<td>产品渠道</td>
+		<td>产品名称</td>
+		<td>$!result.productInfo.productName</td>
+	</tr>
+	<tr>
+		<td>产品来源</td>
 		<td>$!result.productInfo.category.message</td>
 	</tr>
 	<tr>
@@ -17,9 +21,13 @@
 	<tr>
 		<td>产品图片</td>
 		<td>
-			#foreach($!pic in $!$!result.productInfo.productPicInfos)
-				<img data-src="holder.js/260x180" alt="260x180" style="width: 260px; height: 180px; " src="$!pic.picSourceUrl">
-			#end
+			<ul class="thumbnails">
+			  #foreach($!pic in $!$!result.productInfo.productPicInfos)
+              <li class="span3">
+				<a class="thumbnail"><img style="width: 260px; height: 180px; " src="$!pic.picSourceUrl"></a>
+              </li>
+			  #end
+            </ul>
 		</td>
 	</tr>
 	<tr>
