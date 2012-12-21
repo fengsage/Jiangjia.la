@@ -47,7 +47,7 @@
 		<appender-ref ref="STDOUT"/>
 	</logger>
 	<logger name="org.springframework" additivity="true">
-		<level value="debug"/>
+		<level value="info"/>
 		<appender-ref ref="STDOUT"/>
 	</logger>
 	<logger name="log4j.category.org.springframework.data.document.mongodb" additivity="true">
@@ -56,7 +56,7 @@
 	</logger>
 	
 	<logger name="org.eclipse.jetty.util.log" additivity="true">
-		<level value="debug"/>
+		<level value="info"/>
 		<appender-ref ref="STDOUT"/>
 	</logger>
 	
@@ -64,7 +64,7 @@
     <!--  Root logger的定义                                                     -->
     <!-- ===================================================================== -->
     <root>
-        <level value="debug"/>
+        <level value="info"/>
         <appender-ref ref="STDOUT"/>
     </root>
     

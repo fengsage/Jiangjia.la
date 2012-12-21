@@ -1,0 +1,4 @@
+出错啦！
+#if($!result)
+$!{result.message}
+#end

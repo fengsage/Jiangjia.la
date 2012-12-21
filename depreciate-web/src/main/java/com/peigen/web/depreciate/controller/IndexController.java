@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.peigen.common.lang.util.PrintLogTool;
 import com.peigen.web.depreciate.controller.base.ControllerBase;
+import com.peigen.web.depreciate.service.enums.DepreciateResultEnum;
 import com.peigen.web.depreciate.service.info.UserInfo;
 import com.peigen.web.depreciate.service.order.ProductOrder;
 import com.peigen.web.depreciate.service.result.BatchUserAttentionResult;
@@ -40,58 +41,66 @@ import com.peigen.web.depreciate.service.result.UserResult;
  */
 @Controller
 public class IndexController extends ControllerBase {
-	
-	@RequestMapping(value = "/index.html")
-	public String index() {
-		
-		return "index.vm";
-	}
-	
-	@RequestMapping(value = "/showMyFollow.html", method = { RequestMethod.GET })
-	public String showMyFollow(ModelMap modelMap, HttpServletRequest request) {
-		
-		PrintLogTool.info("查找", logger);
-		
-		String userName = getParameterTrim(request, "userName");
-		
-		UserResult result = userQueryService.findUserByName(userName);
-		
-		if (result.isSuccess() && result.isExecuted()) {
-			
-			modelMap.put("userInfo", result.getUserInfo());
-			
-			UserInfo userInfo = result.getUserInfo();
-			
-			BatchUserAttentionResult batchUserAttentionResult = userAttentionQueryService
-				.loadUserAttentions(userInfo.getId());
-			
-			if (batchUserAttentionResult.isSuccess() && batchUserAttentionResult.isExecuted()) {
-				modelMap.put("attentionProducts", batchUserAttentionResult.getUserAttentions());
-			}
-			
-		}
-		return "index.vm";
-	}
-	
-	@SuppressWarnings("unused")
-	@RequestMapping(value = "/follow.html", method = { RequestMethod.POST })
-	public String follow(ModelMap modelMap, HttpServletRequest request) {
-		
-		String attentionUrl = getParameterTrim(request, "attentionUrl");
-		String userId = getParameterTrim(request, "userId");
-		String userName = getParameterTrim(request, "userName");
-		
-		UserResult result = userQueryService.findUserByName(userName);
-		
-		if (result.isSuccess() && result.isExecuted()) {
-			
-			ProductOrder productOrder = new ProductOrder();
-			productOrder.setUrl(attentionUrl);
-			productOrder.setUserId(result.getUserInfo().getId());
-			
-			ProductResult productResult = productService.addProduct(productOrder);
-			
-		}
-		return "index.vm";
-	}
+
+    @RequestMapping(value = "/index.html")
+    public String index() {
+
+        return "index.vm";
+    }
+
+    @RequestMapping(value = "/error.html")
+    public String error(ModelMap modelMap, HttpServletRequest request) {
+        String code = request.getParameter("code");
+        DepreciateResultEnum result = DepreciateResultEnum.getByCode(code);
+        modelMap.put("result", result);
+        return "error.vm";
+    }
+
+    @RequestMapping(value = "/showMyFollow.html", method = { RequestMethod.GET })
+    public String showMyFollow(ModelMap modelMap, HttpServletRequest request) {
+
+        PrintLogTool.info("查找", logger);
+
+        String userName = getParameterTrim(request, "userName");
+
+        UserResult result = userQueryService.findUserByName(userName);
+
+        if (result.isSuccess() && result.isExecuted()) {
+
+            modelMap.put("userInfo", result.getUserInfo());
+
+            UserInfo userInfo = result.getUserInfo();
+
+            BatchUserAttentionResult batchUserAttentionResult = userAttentionQueryService
+                .loadUserAttentions(userInfo.getId());
+
+            if (batchUserAttentionResult.isSuccess() && batchUserAttentionResult.isExecuted()) {
+                modelMap.put("attentionProducts", batchUserAttentionResult.getUserAttentions());
+            }
+
+        }
+        return "index.vm";
+    }
+
+    @SuppressWarnings("unused")
+    @RequestMapping(value = "/follow.html", method = { RequestMethod.POST })
+    public String follow(ModelMap modelMap, HttpServletRequest request) {
+
+        String attentionUrl = getParameterTrim(request, "attentionUrl");
+        String userId = getParameterTrim(request, "userId");
+        String userName = getParameterTrim(request, "userName");
+
+        UserResult result = userQueryService.findUserByName(userName);
+
+        if (result.isSuccess() && result.isExecuted()) {
+
+            ProductOrder productOrder = new ProductOrder();
+            productOrder.setUrl(attentionUrl);
+            productOrder.setUserId(result.getUserInfo().getId());
+
+            ProductResult productResult = productService.addProduct(productOrder);
+
+        }
+        return "index.vm";
+    }
 }
