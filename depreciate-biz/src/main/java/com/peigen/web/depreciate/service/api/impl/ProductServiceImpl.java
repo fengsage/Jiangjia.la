@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 
 import com.peigen.common.lang.util.MoneyUtil;
 import com.peigen.common.lang.util.PrintLogTool;
+import com.peigen.common.lang.util.StringUtil;
 import com.peigen.common.lang.util.money.Money;
 import com.peigen.web.depreciate.service.InvokeRepositService;
 import com.peigen.web.depreciate.service.InvokeService;
@@ -63,11 +64,19 @@ public class ProductServiceImpl extends ProductServiceBase implements ProductSer
 		Date now = getSysdate();
 		
 		try {
-			// 解析url
-			ProductInfo productInfo = parseService.parse(productOrder.getUrl());
-			productInfo.setStatus(ProductStatusEnum.ENABLE);
-			productInfo.setId(getDBKey(TableSeqNameEnum.SEQ_DEPRECIATE_PRODUCT));
-			productInfo.setRawAddTime(now);
+			
+			ProductInfo productInfo = null;
+			
+			if (StringUtil.isNotEmpty(productOrder.getUserId())) {
+				result = addProduct(productOrder);
+				if (result.isSuccess() && result.isExecuted())
+					productInfo = result.getProductInfo();
+			} else {
+				productInfo = parseService.parse(productOrder.getUrl());
+				productInfo.setStatus(ProductStatusEnum.ENABLE);
+				productInfo.setId(getDBKey(TableSeqNameEnum.SEQ_DEPRECIATE_PRODUCT));
+				productInfo.setRawAddTime(now);
+			}
 			
 			setSuccessProductResult(result, productInfo);
 		} catch (Exception e) {

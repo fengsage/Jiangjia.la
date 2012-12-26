@@ -64,7 +64,7 @@
     <!--  Root logger的定义                                                     -->
     <!-- ===================================================================== -->
     <root>
-        <level value="debug"/>
+        <level value="info"/>
         <appender-ref ref="STDOUT"/>
     </root>
     

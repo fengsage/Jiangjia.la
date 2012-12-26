@@ -88,6 +88,8 @@ public class MbaobaoParse extends ParseBase {
 		String productSerialNo = elements.get(0).childNode(0).toString();
 		
 		productSerialNo = StringUtil.replace(productSerialNo, "：", ":");
+		productSerialNo = StringUtil.replace(productSerialNo, "\n", "");
+		productSerialNo = StringUtil.replace(productSerialNo, "\r", "");
 		productSerialNo = StringUtil.replace(productSerialNo, "编号:", "");
 		
 		product.setProductSerialNo(productSerialNo);
