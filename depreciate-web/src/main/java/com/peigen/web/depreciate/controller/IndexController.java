@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.peigen.common.lang.util.PrintLogTool;
 import com.peigen.web.depreciate.controller.base.ControllerBase;
+import com.peigen.web.depreciate.service.enums.DepreciateResultEnum;
 import com.peigen.web.depreciate.service.info.UserInfo;
 import com.peigen.web.depreciate.service.order.ProductOrder;
 import com.peigen.web.depreciate.service.result.BatchUserAttentionResult;

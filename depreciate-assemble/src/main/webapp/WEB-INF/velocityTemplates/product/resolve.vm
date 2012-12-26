@@ -1,0 +1,45 @@
+#set($layout = "layout/layout_m.vm") 
+
+#if($!result && $!result.success)
+<table class="table table-striped">
+	<tr>
+		<td>产品地址</td>
+		<td><a href="$!result.productInfo.productUrl" target="_blank">$!result.productInfo.productUrl</a></td>
+	</tr>
+	<tr>
+		<td>产品名称</td>
+		<td>$!result.productInfo.productName</td>
+	</tr>
+	<tr>
+		<td>产品来源</td>
+		<td>$!result.productInfo.category.message</td>
+	</tr>
+	<tr>
+		<td>产品编号</td>
+		<td>$!result.productInfo.productSerialNo</td>
+	</tr>
+	<tr>
+		<td>产品图片</td>
+		<td>
+			<ul class="thumbnails">
+			  #foreach($!pic in $!$!result.productInfo.productPicInfos)
+              <li class="span3">
+				<a class="thumbnail"><img style="width: 260px; height: 180px; " src="$!pic.picSourceUrl"></a>
+              </li>
+			  #end
+            </ul>
+		</td>
+	</tr>
+	<tr>
+		<td>当前价格</td>
+		<td>￥$!result.productInfo.productCurrentPrice</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<a class="btn btn-success" href="/attentionProduct.html?productId=$!result.productInfo.id">我要关注</a>
+			<a class="btn btn-inverse" href="/">换个产品</a>
+		</td>
+	</tr>
+</table>
+#end
